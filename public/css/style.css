@@ -5,3 +5,7 @@
 .category-link:hover{
     text-decoration: none;
 }
+
+.paginate-block{
+    display: block;;
+}

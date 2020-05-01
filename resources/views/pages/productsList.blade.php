@@ -10,9 +10,17 @@
         </ol>
     </nav>
 
+    <div class="paginate-block">
+        {{ $products->links() }}
+    </div>
+
     <div class="row row-cols-1 row-cols-md-3">
         @foreach($products as $product)
             @include('pages.blocks.products.item', ['product' => $product])
         @endforeach
+    </div>
+
+    <div class="paginate-block">
+        {{ $products->links() }}
     </div>
 @endsection
