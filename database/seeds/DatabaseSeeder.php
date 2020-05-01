@@ -11,6 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+        /**
+         * Начальные данные
+         */
+         $this->call(CardCategoriesTableSeeder::class);
+
+        /**
+         * Тестовые данные
+         */
+         $this->call(UsersTableSeeder::class);
+        $this->call(ProductCardsTableSeeder::class);
     }
 }

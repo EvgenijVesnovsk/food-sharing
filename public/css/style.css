@@ -1,0 +1,7 @@
+.category-link{
+    color: #000;
+}
+
+.category-link:hover{
+    text-decoration: none;
+}
