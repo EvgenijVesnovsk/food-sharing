@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\CardCategory;
+use App\Models\Comment;
 
 class ProductCard extends Model
 {
@@ -15,7 +16,10 @@ class ProductCard extends Model
         'images' => 'array',
     ];
 
-    protected $with = ['category'];
+    protected $with = [
+        'category',
+        'comments.user'
+    ];
 
     /**
      * User
@@ -35,5 +39,15 @@ class ProductCard extends Model
     public function category()
     {
         return $this->hasOne(CardCategory::class, 'id','card_category_id');
+    }
+
+    /**
+     * Comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'product_card_id','id');
     }
 }

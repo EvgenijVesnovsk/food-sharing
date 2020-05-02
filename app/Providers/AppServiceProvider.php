@@ -7,6 +7,8 @@ use App\Services\ProductCards\Repositories\ProductCardsInterface;
 use App\Services\ProductCards\Repositories\EloquentProductCardsRepository;
 use App\Services\CardCategories\Repositories\CardCategoriesInterface;
 use App\Services\CardCategories\Repositories\EloquentCardCategoriesRepository;
+use App\Services\Comments\Repositories\CommentsInterface;
+use App\Services\Comments\Repositories\EloquentCommentsRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(ProductCardsInterface::class, EloquentProductCardsRepository::class);
         $this->app->bind(CardCategoriesInterface::class, EloquentCardCategoriesRepository::class);
+        $this->app->bind(CommentsInterface::class, EloquentCommentsRepository::class);
     }
 
     /**

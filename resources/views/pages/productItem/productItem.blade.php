@@ -3,11 +3,15 @@
 @section('title', '')
 
 @section('content')
+    @guest
+        @include('layouts.blocks.invite')
+    @endguest
     @include('pages.productItem.blocks.breadcrumb')
     @include('pages.productItem.blocks.carousel')
     @include('pages.productItem.blocks.description')
     @include('pages.productItem.blocks.map')
     @include('pages.productItem.blocks.comments')
+    @include('layouts.blocks.footer')
 @endsection
 
 @section('scripts')
@@ -16,6 +20,41 @@
             $('#addacomment').on('click', function () {
                 $('#addcomment').toggle();
             });
+            $('#commentStore').on('click', function () {
+
+                let comment = $('#textComment').val();
+                let today = "@php echo now()->format('d-m-Y'); @endphp";
+                if(comment){
+                    $.ajax({
+                        url: "/product/comment",
+                        method: "post",
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        data: {
+                            id: {{$product->id}},
+                            comment: comment,
+                        },
+                        success: function (result) {
+                            console.log('успех');
+                            console.log(result);
+                            if(result){
+                                $('#comments').append('' +
+                                    '<div class="row-comment comment">' +
+                                    '    <div class="head-comment">' +
+                                    '        <small><strong class="user-comment">'+ "{{\Auth::user()->name}}" +'</strong> '+ today +'</small>' +
+                                    '    </div>' +
+                                    '    <p>'+ comment +'</p>' +
+                                    '</div>');
+                                result.comment
+                            }
+                        },
+                        error: function (q, w, e) {
+                            console.log('неуспех');
+                            console.log(e);
+                        }
+                    });
+                }
+
+            })
         });
     </script>
     <script type="text/javascript">
@@ -23,7 +62,8 @@
             let latitude = 55.76; //значение по умолчанию (Москва)
             let longitude = 37.64; //значение по умолчанию (Москва)
             let flag = false;
-            if({{$product->latitude}} && {{$product->longitude}}){
+            if ({{$product->latitude}} && {{$product->longitude}})
+            {
                 flag = true;
                 latitude = {{$product->latitude}};
                 longitude = {{$product->longitude}};
@@ -32,7 +72,8 @@
             // Функция ymaps.ready() будет вызвана, когда
             // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
             ymaps.ready(init);
-            function init(){
+
+            function init() {
 
                 // Создание карты.
                 var myMap = new ymaps.Map("map", {
@@ -47,7 +88,7 @@
                 })
                 // Вспомогательный класс, который можно использовать
                 // вместо GeoObject c типом геометрии «Point» (см. предыдущий пример)
-                if(flag){
+                if (flag) {
                     var myPlacemark = new ymaps.Placemark([latitude, longitude], {}, {
                         preset: 'islands#redIcon'
                     });

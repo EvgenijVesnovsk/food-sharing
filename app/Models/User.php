@@ -41,4 +41,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\ProductCard');
     }
+
+    /**
+     * Comment
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function comments()
+    {
+        return $this->belongsTo('App\Models\Comment');
+    }
 }

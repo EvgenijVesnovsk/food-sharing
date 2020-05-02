@@ -6,6 +6,8 @@ use App\Models\CardCategory;
 use App\Models\ProductCard;
 use App\Services\ProductCards\ProductCardsService;
 use App\Services\Geocode\GeocodeService;
+use App\Services\Comments\CommentsService;
+use App\Http\Requests\StoreComment;
 use Illuminate\Http\Request;
 
 class ProductCardsController extends Controller
@@ -20,14 +22,21 @@ class ProductCardsController extends Controller
      */
     private $geocodeService;
 
+    /**
+     * @var $commentsService
+     */
+    private $commentsService;
+
     public function __construct
     (
         ProductCardsService $productCardsService,
-        GeocodeService $geocodeService
+        GeocodeService $geocodeService,
+        CommentsService $commentsService
     )
     {
         $this->productCardsService = $productCardsService;
         $this->geocodeService = $geocodeService;
+        $this->commentsService = $commentsService;
     }
 
     /**
@@ -63,10 +72,18 @@ class ProductCardsController extends Controller
     }
 
     /**
-     * Отправить сообщение
+     * Добавить комментарий
+     *
+     * @param StoreComment $request
+     * @return \App\Models\Comment
      */
-    public function addMessage()
+    public function commentStore(StoreComment $request)
     {
-        //
+        return $this->commentsService->create([
+            'user_id' => \Auth::id(),
+            'product_card_id' => $request->get('id'),
+            'comment' => $request->get('comment'),
+        ]);
+
     }
 }

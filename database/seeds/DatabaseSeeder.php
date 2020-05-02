@@ -14,12 +14,13 @@ class DatabaseSeeder extends Seeder
         /**
          * Начальные данные
          */
-         $this->call(CardCategoriesTableSeeder::class);
+        $this->call(CardCategoriesTableSeeder::class);
 
         /**
          * Тестовые данные
          */
-         $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(ProductCardsTableSeeder::class);
+        $this->call(CommentsTableSeeder::class);
     }
 }
