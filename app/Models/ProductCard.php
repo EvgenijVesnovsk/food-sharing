@@ -15,6 +15,8 @@ class ProductCard extends Model
         'images' => 'array',
     ];
 
+    protected $with = ['category'];
+
     /**
      * User
      *
@@ -32,6 +34,6 @@ class ProductCard extends Model
      */
     public function category()
     {
-        return $this->hasOne(CardCategory::class);
+        return $this->hasOne(CardCategory::class, 'id','card_category_id');
     }
 }

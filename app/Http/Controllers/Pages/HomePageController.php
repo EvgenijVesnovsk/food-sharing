@@ -23,7 +23,7 @@ class HomePageController extends PageController
 
     public function index()
     {
-        return view('pages/homepage', [
+        return view('pages.home.homepage', [
             'cardCategories' => $this->cardCategoriesService->search([]),
         ]);
     }

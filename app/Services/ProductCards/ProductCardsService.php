@@ -4,7 +4,7 @@
 namespace App\Services\ProductCards;
 
 use App\Models\ProductCard;
-use App\Services\ProductCards\Repositories\EloquentProductCardsRepository;
+use App\Services\ProductCards\Repositories\ProductCardsInterface;
 
 class ProductCardsService
 {
@@ -15,7 +15,7 @@ class ProductCardsService
 
     public function __construct
     (
-        EloquentProductCardsRepository $repository
+        ProductCardsInterface $repository
     )
     {
         $this->repository = $repository;

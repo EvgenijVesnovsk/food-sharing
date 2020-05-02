@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ProductCards\ProductCardsService;
 use App\Models\CardCategory;
+use App\Models\ProductCard;
+use App\Services\ProductCards\ProductCardsService;
+use App\Services\Geocode\GeocodeService;
 use Illuminate\Http\Request;
 
 class ProductCardsController extends Controller
@@ -13,12 +15,19 @@ class ProductCardsController extends Controller
      */
     private $productCardsService;
 
+    /**
+     * @var $geocodeService
+     */
+    private $geocodeService;
+
     public function __construct
     (
-        ProductCardsService $productCardsService
+        ProductCardsService $productCardsService,
+        GeocodeService $geocodeService
     )
     {
         $this->productCardsService = $productCardsService;
+        $this->geocodeService = $geocodeService;
     }
 
     /**
@@ -29,7 +38,7 @@ class ProductCardsController extends Controller
      */
     public function listByCategory(CardCategory $category)
     {
-        return view('pages.productsList', [
+        return view('pages.productsList.productsList', [
             'category' => $category,
             'products' => $this->productCardsService->searchByCategory($category->id),
         ]);
@@ -38,9 +47,11 @@ class ProductCardsController extends Controller
     /**
      * Карточка продукта
      */
-    public function show()
+    public function show(ProductCard $product)
     {
-        //
+        return view('pages.productItem.productItem',[
+            'product' => $product,
+        ]);
     }
 
     /**

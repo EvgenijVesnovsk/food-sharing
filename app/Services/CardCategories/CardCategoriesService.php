@@ -3,7 +3,7 @@
 
 namespace App\Services\CardCategories;
 
-use App\Services\CardCategories\Repositories\EloquentCardCategoriesRepository;
+use App\Services\CardCategories\Repositories\CardCategoriesInterface;
 use App\Models\CardCategory;
 
 class CardCategoriesService
@@ -15,7 +15,7 @@ class CardCategoriesService
 
     public function __construct
     (
-        EloquentCardCategoriesRepository $repository
+        CardCategoriesInterface $repository
     )
     {
         $this->repository = $repository;

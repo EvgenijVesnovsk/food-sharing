@@ -9,3 +9,33 @@
 .paginate-block{
     display: block;;
 }
+
+.carousel-item-size{
+    width: 1108px;
+    height: 400px;
+}
+
+/* comments(start) */
+.hr-comment{
+    border-top: 1px solid #000 !important;
+}
+
+.row-comment{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.comment{
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.head-comment{
+    margin-bottom: 10px;
+}
+
+.user-comment{
+    margin-right: 10px;
+}
+/* comments(end) */
