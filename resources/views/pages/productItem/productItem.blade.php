@@ -24,7 +24,7 @@
 
                 let comment = $('#textComment').val();
                 let today = "@php echo now()->format('d-m-Y'); @endphp";
-                if(comment){
+                if (comment) {
                     $.ajax({
                         url: "/product/comment",
                         method: "post",
@@ -36,16 +36,15 @@
                         success: function (result) {
                             console.log('успех');
                             console.log(result);
-                            if(result){
-                                $('#comments').append('' +
-                                    '<div class="row-comment comment">' +
-                                    '    <div class="head-comment">' +
-                                    '        <small><strong class="user-comment">'+ "{{\Auth::user()->name}}" +'</strong> '+ today +'</small>' +
-                                    '    </div>' +
-                                    '    <p>'+ comment +'</p>' +
-                                    '</div>');
-                                result.comment
-                            }
+                            $('#comments').append('' +
+                                '<div class="row-comment comment">' +
+                                '    <div class="head-comment">' +
+                                '        <small><strong class="user-comment">' + result.user_name + '</strong> ' + result.created_at + '</small>' +
+                                '    </div>' +
+                                '    <p>' + result.comment + '</p>' +
+                                '</div>');
+                            result.comment
+
                         },
                         error: function (q, w, e) {
                             console.log('неуспех');

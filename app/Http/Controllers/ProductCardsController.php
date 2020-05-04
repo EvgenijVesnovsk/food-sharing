@@ -75,14 +75,20 @@ class ProductCardsController extends Controller
      * Добавить комментарий
      *
      * @param StoreComment $request
-     * @return \App\Models\Comment
+     * @return \Illuminate\Http\JsonResponse
      */
     public function commentStore(StoreComment $request)
     {
-        return $this->commentsService->create([
+        $result =  $this->commentsService->create([
             'user_id' => \Auth::id(),
             'product_card_id' => $request->get('id'),
             'comment' => $request->get('comment'),
+        ]);
+
+        return response()->json([
+            'user_name' => \Auth::user()->name,
+            'comment' => $result->comment,
+            'created_at' => $result->created_at->format('d-m-Y'),
         ]);
 
     }
