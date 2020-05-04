@@ -12,6 +12,17 @@ class ProductCard extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'card_category_id',
+        'name',
+        'description',
+        'images',
+        'address',
+        'latitude',
+        'longitude'
+    ];
+
     protected $casts = [
         'images' => 'array',
     ];

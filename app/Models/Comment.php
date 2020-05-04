@@ -8,7 +8,11 @@ use App\Models\ProductCard;
 
 class Comment extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'product_card_id',
+        'comment'
+    ];
 
     /**
      * User

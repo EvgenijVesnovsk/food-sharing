@@ -19,6 +19,17 @@ class EloquentProductCardsRepository implements ProductCardsInterface
     }
 
     /**
+     *  Список продуктов пользователя
+     *
+     * @param int $id
+     * @return LengthAwarePaginator
+     */
+    public function searchByUser(int $id): LengthAwarePaginator
+    {
+        return ProductCard::where('user_id', $id)->latest()->paginate();
+    }
+
+    /**
      * Список продуктов по категории
      *
      * @param int $id
@@ -26,7 +37,7 @@ class EloquentProductCardsRepository implements ProductCardsInterface
      */
     public function searchByCategory(int $id): LengthAwarePaginator
     {
-        return ProductCard::where('card_category_id', $id)->paginate();
+        return ProductCard::where('card_category_id', $id)->latest()->paginate();
     }
 
     public function createFromArray(array $data): ProductCard

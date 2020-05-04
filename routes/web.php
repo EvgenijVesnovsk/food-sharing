@@ -13,11 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/', 'Pages\HomePageController@index')->name('home');
 
 Route::get('/category/{category}', 'ProductCardsController@listByCategory')->name('category.list');
 Route::get('/product/{product}', 'ProductCardsController@show')->name('product.show');
 Route::post('/product/comment', 'ProductCardsController@commentStore')->name('comment.store')->middleware('auth');
 
+Route::resource('profile', 'Profiles\ProductCardsController')->middleware('auth');

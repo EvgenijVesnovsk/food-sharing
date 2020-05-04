@@ -12,6 +12,8 @@ interface ProductCardsInterface
 
     public function search(array $filters): LengthAwarePaginator;
 
+    public function searchByUser(int $id): LengthAwarePaginator;
+
     public function searchByCategory(int $id) : LengthAwarePaginator;
 
     public function createFromArray(array $data): ProductCard;

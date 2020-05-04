@@ -6,7 +6,7 @@
     </ol>
     <div class="carousel-inner">
         @foreach($product->images as $image)
-            @include('pages.productItem.blocks.carousel.item', ['image' => $image])
+            @include('pages.productItem.blocks.carousel.item', ['product' => $product, 'image' => $image])
         @endforeach
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

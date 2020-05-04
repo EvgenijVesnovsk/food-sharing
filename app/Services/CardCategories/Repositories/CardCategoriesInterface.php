@@ -10,6 +10,8 @@ interface CardCategoriesInterface
 {
     public function find(int $id): ?CardCategory;
 
+    public function getAll();
+
     public function search(array $filters): LengthAwarePaginator;
 
     public function createFromArray(array $data): CardCategory;

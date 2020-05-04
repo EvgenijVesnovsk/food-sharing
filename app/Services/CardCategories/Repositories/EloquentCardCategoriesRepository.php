@@ -13,6 +13,11 @@ class EloquentCardCategoriesRepository implements CardCategoriesInterface
         return CardCategory::find($id);
     }
 
+    public function getAll()
+    {
+       return CardCategory::all();
+    }
+
     public function search(array $filters): LengthAwarePaginator
     {
         return CardCategory::paginate();

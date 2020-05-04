@@ -4,6 +4,7 @@
 namespace App\Services\ProductCards;
 
 use App\Models\ProductCard;
+use App\Services\ProductCards\Handlers\ImagesStoreHandler;
 use App\Services\ProductCards\Repositories\ProductCardsInterface;
 
 class ProductCardsService
@@ -13,12 +14,19 @@ class ProductCardsService
      */
     private $repository;
 
+    /**
+     * @var $imagesStoreHandler
+     */
+    private $imagesStoreHandler;
+
     public function __construct
     (
-        ProductCardsInterface $repository
+        ProductCardsInterface $repository,
+        ImagesStoreHandler $imagesStoreHandler
     )
     {
         $this->repository = $repository;
+        $this->imagesStoreHandler = $imagesStoreHandler;
     }
 
     public function find(int $id)
@@ -29,6 +37,17 @@ class ProductCardsService
     public function search(array $filters)
     {
         return $this->repository->search($filters);
+    }
+
+    /**
+     * Список продуктов пользователя
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function searchByUser($id)
+    {
+        return $this->repository->searchByUser($id);
     }
 
     /**
@@ -44,7 +63,16 @@ class ProductCardsService
 
     public function create(array $data)
     {
-        return $this->repository->createFromArray($data);
+        $images = $data['images'];
+        unset($data['images']);
+
+        $product = $this->repository->createFromArray($data);
+        $product->images = $this->imagesStoreHandler->handler($product->id,$images);
+        $this->update($product, [
+            'images' => $product->images
+        ]);
+
+        return $product;
     }
 
     public function update(ProductCard $model, array $data)

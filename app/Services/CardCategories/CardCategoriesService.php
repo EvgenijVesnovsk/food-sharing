@@ -26,6 +26,11 @@ class CardCategoriesService
         return $this->repository->find($id);
     }
 
+    public function getAll()
+    {
+        return $this->repository->getAll();
+    }
+
     public function search(array $filters)
     {
         return $this->repository->search($filters);
