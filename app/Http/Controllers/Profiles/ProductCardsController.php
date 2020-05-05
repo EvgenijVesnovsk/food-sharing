@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductCard;
 use App\Services\ProductCards\ProductCardsService;
 use App\Services\CardCategories\CardCategoriesService;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductCardRequest;
+use App\Http\Requests\UpdateProductCardRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ProductCardsController extends Controller
@@ -55,30 +55,20 @@ class ProductCardsController extends Controller
     public function edit(ProductCard $profile)
     {
         return view('profiles.edit',[
+            'categories' => $this->cardCategoriesService->getAll()->pluck('name', 'id')->toArray(),
             'product' => $profile
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductCard  $productCard
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ProductCard $productCard)
+    public function update(UpdateProductCardRequest $request, ProductCard $profile)
     {
-        //
+        $this->productCardsService->update($profile, $request->all());
+        return redirect(route('profile.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\ProductCard  $productCard
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ProductCard $productCard)
+    public function destroy(ProductCard $profile)
     {
-        //
+        $this->productCardsService->delete($profile);
+        return redirect(route('profile.index'));
     }
 }

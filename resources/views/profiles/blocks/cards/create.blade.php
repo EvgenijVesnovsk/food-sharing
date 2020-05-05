@@ -12,7 +12,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="category">@lang('profiles.card_category')</label>
-            {!! Form::select('card_category_id', $categories, ['id'=>'category','class'=>'form-control']); !!}
+            {!! Form::select('card_category_id', $categories, '',['id'=>'category','class'=>'form-control']); !!}
         </div>
     </div>
     <div class="form-row">

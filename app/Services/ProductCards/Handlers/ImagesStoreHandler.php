@@ -21,9 +21,15 @@ class ImagesStoreHandler
     public function handler($productId, $images)
     {
         $root = public_path('storage/images/product_cards/'.$productId);
-        File::makeDirectory($root);
-        File::makeDirectory($root.'/medium');
-        File::makeDirectory($root.'/small');
+        if(!File::isDirectory($root)) {
+            File::makeDirectory($root);
+        }
+        if(!File::isDirectory($root.'/medium')) {
+            File::makeDirectory($root.'/medium');
+        }
+        if(!File::isDirectory($root.'/small')) {
+            File::makeDirectory($root.'/small');
+        }
 
         $imagesPath = [];
         foreach ($images as $image) {

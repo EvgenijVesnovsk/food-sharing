@@ -8,15 +8,12 @@
     <td width="10%">
         <a href="{{route('profile.edit', ['profile' => $product->id])}}" title="" class="text-decoration-none"> <i class="far fa-edit"></i> </a>
         <form style="display: inline-block"
-              action="{{route('profile.destroy', ['profile' => $product->id])}}"
-              method="post">
+              action="{{route('profile.destroy', ['profile' => $product->id])}}" method="post">
             @csrf
             @method('DELETE')
-            <button type="button" class="linkButton">
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" onclick="parentNode.submit();">
                     <i class="far fa-trash-alt"></i>
                 </a>
-            </button>
         </form>
     </td>
 </tr>

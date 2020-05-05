@@ -63,20 +63,30 @@ class ProductCardsService
 
     public function create(array $data)
     {
-        $images = $data['images'];
-        unset($data['images']);
+
+        if(!empty($data['images'])){
+            $images = $data['images'];
+            unset($data['images']);
+        }
 
         $product = $this->repository->createFromArray($data);
-        $product->images = $this->imagesStoreHandler->handler($product->id,$images);
-        $this->update($product, [
-            'images' => $product->images
-        ]);
+
+        if(!empty($images)){
+            $product->images = $this->imagesStoreHandler->handler($product->id,$images);
+            $this->repository->updateFromArray($product, [
+                'images' => $product->images
+            ]);
+        }
 
         return $product;
     }
 
     public function update(ProductCard $model, array $data)
     {
+        if(!empty($data['images'])){
+            $data['images'] = $this->imagesStoreHandler->handler($model->id,$data['images']);
+        }
+
         return $this->repository->updateFromArray($model, $data);
     }
 
