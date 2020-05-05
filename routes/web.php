@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 Route::get('/', 'Pages\HomePageController@index')->name('home');
 
 Route::get('/category/{category}', 'ProductCardsController@listByCategory')->name('category.list');

@@ -2,9 +2,10 @@
 
 namespace App\Services\ProductCards\Handlers;
 
-use App\Helpers\ImageResize;
+use App\Jobs\ImageOptimize;
+use App\Jobs\ImageResize;
+use App\Jobs\Queues;
 use Illuminate\Support\Facades\File;
-use ImageOptimizer;
 
 class ImagesStoreHandler
 {
@@ -34,11 +35,10 @@ class ImagesStoreHandler
         $imagesPath = [];
         foreach ($images as $image) {
             $path = $image->store('images/product_cards/' . $productId . '/original', 'public');
-            ImageOptimizer::optimize(public_path('storage/' . $path));
-
+            ImageOptimize::dispatch($path)->onQueue(Queues::IMAGE_OPTIMIZE);
             $baseName = basename($path);
-            ImageResize::imageResize($root.'/original/'.$baseName, self::MEDIUM_SIZE, $root.'/medium/'.$baseName);
-            ImageResize::imageResize($root.'/original/'.$baseName, self::SMALL_SIZE, $root.'/small/'.$baseName);
+            ImageResize::dispatch($root.'/original/'.$baseName, self::MEDIUM_SIZE, $root.'/medium/'.$baseName)->onQueue(Queues::IMAGE_RESIZE);
+            ImageResize::dispatch($root.'/original/'.$baseName, self::SMALL_SIZE, $root.'/small/'.$baseName)->onQueue(Queues::IMAGE_RESIZE);
             $imagesPath[] = $baseName;
         }
 
